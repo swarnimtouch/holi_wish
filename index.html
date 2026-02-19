@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zydus Details Form</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS for Mobile Background (Up to 1025px) */
+        body {
+            background-image: url('blue_mobile.png');
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        /* CSS for Desktop Background (1026px and above) */
+        @media (min-width: 1026px) {
+            body {
+                background-image: url('Blue_desktop.png');
+            }
+        }
+
+        /* Form Box Styling */
+        .form-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px; 
+            border-top: 6px solid #A45597; 
+        }
+
+        /* Logo Styling */
+        .logo-img {
+            max-width: 80px;
+            display: block;
+            margin: 0 auto 5px auto; /* Iska bottom margin 10px se 5px kiya hai taaki text logo ke zyada paas lage */
+        }
+
+        /* NAYA CODE: Festival of Colors text ki styling */
+        .festival-text {
+            font-family: 'Dancing Script', cursive; /* Stylish Cursive Font */
+            text-align: center; /* Text ko horizontally center me lane ke liye */
+            font-size: 2rem; /* Font ka size bada aur attractive dikhne ke liye */
+            color: #A45597; /* Aapki theme ka pinkish/purple color jisse match ho jaye */
+            margin-bottom: 15px; /* Niche wale form elements se thoda gap rakhne ke liye */
+            font-weight: 700;
+        }
+
+        /* Section Titles Styling */
+        .section-title {
+            color: #A45597;
+            font-weight: bold;
+            font-size: 1.05rem;
+            border-bottom: 2px solid #169A9C;
+            padding-bottom: 3px;
+            margin-top: 5px;
+            margin-bottom: 12px;
+        }
+
+        /* Typography and Inputs */
+        .form-label {
+            color: #169A9C; 
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 2px;
+        }
+
+        .form-control:focus {
+            border-color: #A45597;
+            box-shadow: 0 0 0 0.25rem rgba(164, 85, 151, 0.25);
+        }
+
+        /* Custom Button Styling */
+        .btn-custom {
+            background-color: #A45597;
+            color: #fff;
+            border: none;
+            font-weight: bold;
+            padding: 8px;
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
+
+        .btn-custom:hover {
+            background-color: #169A9C;
+            color: #fff;
+            transition: 0.3s;
+        }
+        
+        /* Secondary Button (for Upload) */
+        .btn-secondary-custom {
+            background-color: #fff;
+            color: #A45597;
+            border: 1px solid #A45597;
+            font-weight: 600;
+            padding: 5px 10px;
+            font-size: 0.85rem;
+        }
+        .btn-secondary-custom:hover {
+            background-color: #A45597;
+            color: #fff;
+        }
+
+        /* jQuery Validation Error Styles */
+        label.error {
+            color: #A45597;
+            font-size: 0.75rem;
+            margin-top: 2px;
+            display: block;
+            text-align: left;
+        }
+        input.error {
+            border-color: #A45597;
+        }
+
+        /* Crop Button Specific Styling - Height match karne ke liye */
+        #cropImageBtn {
+            background-color: #A45597;
+            color: #fff;
+            border: 1px solid #A45597; /* 1px border bahut zaruri hai cancel button se exact height match karne ke liye */
+            font-weight: bold;
+        }
+        
+        #cropImageBtn:hover {
+            background-color: #169A9C;
+            border-color: #169A9C;
+            color: #fff;
+        }
+
+        /* Preview Image Style */
+        #preview-image {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 5px;
+            border: 2px solid #169A9C;
+            margin-top: 10px;
+            margin-left: auto;  /* NAYA: Center karne ke liye */
+            margin-right: auto; /* NAYA: Center karne ke liye */
+            display: none; /* Initially hidden */
+        }
+
+        /* NAYA CODE: Modal open hone par background ko zyada dark karne ke liye */
+        .modal-backdrop.show {
+            opacity: 0.85 !important; /* Default 0.5 hota hai, 0.85 karne se piche ka hissa dark ho jayega */
+            background-color: #000 !important; /* Piche ka color pure black ensure karne ke liye */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-box">
+        <img src="zydus.png" alt="Zydus Logo" class="logo-img">
+
+        <div class="festival-text">Festival of Colors</div>
+        
+        <form id="detailsForm">
+            
+            <div class="section-title">Employee Details</div>
+            <div class="row">
+                <div class="col-md-6 mb-2">
+                    <label for="empName" class="form-label">Employee Name</label>
+                    <input type="text" class="form-control form-control-sm" id="empName" name="empName" placeholder="Enter Employee Name">
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label for="empId" class="form-label">Employee ID</label>
+                    <input type="text" class="form-control form-control-sm" id="empId" name="empId" placeholder="Enter Employee ID">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-2">
+                    <label for="empRegion" class="form-label">Region</label>
+                    <input type="text" class="form-control form-control-sm" id="empRegion" name="empRegion" placeholder="Enter Region">
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label for="empCity" class="form-label">City</label>
+                    <input type="text" class="form-control form-control-sm" id="empCity" name="empCity" placeholder="Enter Employee City">
+                </div>
+            </div>
+
+            <div class="section-title mt-2">Doctor Details</div>
+            <div class="row">
+                <div class="col-md-6 mb-2">
+                    <label for="docName" class="form-label">Doctor Name</label>
+                    <input type="text" class="form-control form-control-sm" id="docName" name="docName" placeholder="Enter Doctor Name">
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label for="docCity" class="form-label">City</label>
+                    <input type="text" class="form-control form-control-sm" id="docCity" name="docCity" placeholder="Enter Doctor City">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 mb-2 text-center">
+                    <label class="form-label d-block text-start">Doctor's Photo</label>
+                    <input type="file" id="uploadInput" accept="image/*" style="display: none;">
+                    <button type="button" class="btn btn-secondary-custom w-100" id="uploadBtn">
+                        Choose Photo
+                    </button>
+                    <img id="preview-image" src="" alt="Doctor Preview">
+                    <input type="hidden" id="croppedImageData" name="croppedImageData">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-custom w-100">Submit Form</button>
+        </form>
+    </div>
+
+    <div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #A45597; color: white;">
+                    <h5 class="modal-title" id="cropModalLabel">Crop Photo</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="croppie-demo" style="width: 100%; height: 300px;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm" id="cropImageBtn">Crop & Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // --- Form Validation ---
+            $("#detailsForm").validate({
+                ignore: ":hidden:not(#croppedImageData)", // NAYA CODE: jQuery ko bolna ki is hidden field ko ignore mat karo
+                rules: {
+                    empName: { required: true },
+                    empId: { required: true },
+                    empRegion: { required: true },
+                    empCity: { required: true },
+                    docName: { required: true },
+                    docCity: { required: true },
+                    croppedImageData: { required: true } // NAYA CODE: Photo field mandatory ki
+                },
+                messages: {
+                    empName: "Please enter the Employee Name.",
+                    empId: "Please enter the Employee ID.",
+                    empRegion: "Please enter the Region.",
+                    empCity: "Please enter the Employee City.",
+                    docName: "Please enter the Doctor Name.",
+                    docCity: "Please enter the Doctor City.",
+                    croppedImageData: "Please choose and crop the Doctor's Photo." // NAYA CODE: Photo ka error message
+                },
+                errorPlacement: function(error, element) { 
+                    // NAYA CODE: Error message kahan dikhana hai uski setting
+                    if (element.attr("name") == "croppedImageData") {
+                        error.insertAfter("#croppedImageData"); // Photo ka error hidden input ke niche dikhega
+                    } else {
+                        error.insertAfter(element); // Baaki sabka error default tarike se unke input ke niche
+                    }
+                },
+                submitHandler: function(form) {
+                    // Alert dikhane ke baad redirect karna hai toh alert rehne de sakte hain, 
+                    // warna isko hata bhi sakte hain. 
+                    
+                    // NAYA CODE: Ye line aapko holi_wish.html page par le jayegi
+                    window.location.href = "holi_wish.html"; 
+                }
+            });
+
+            // --- Croppie Logic ---
+            var $uploadCrop;
+            var cropModal = new bootstrap.Modal(document.getElementById('cropModal'));
+
+            // 1. Trigger hidden file input when button is clicked
+            $('#uploadBtn').on('click', function() {
+                $('#uploadInput').click();
+            });
+
+            // 2. Initialize Croppie Instance
+            function initCroppie() {
+                // Destroy if already exists to prevent duplication
+                if ($uploadCrop) {
+                    $('#croppie-demo').croppie('destroy');
+                }
+                
+                $uploadCrop = $('#croppie-demo').croppie({
+                    viewport: {
+                        width: 200,
+                        height: 200,
+                        type: 'square' // 'circle' bhi kar sakte ho
+                    },
+                    boundary: {
+                        width: '100%',
+                        height: 300
+                    },
+                    enableExif: true
+                });
+            }
+
+            // 3. Handle File Selection
+            $('#uploadInput').on('change', function() {
+                var reader = new FileReader();
+                if (this.files && this.files[0]) {
+                    reader.onload = function(e) {
+                        // Open Modal
+                        cropModal.show();
+                        
+                        // Wait for modal to fully open before binding image (fix for alignment issues)
+                        $('#cropModal').on('shown.bs.modal', function() {
+                            initCroppie();
+                            $uploadCrop.croppie('bind', {
+                                url: e.target.result
+                            }).then(function() {
+                                console.log('jQuery bind complete');
+                            });
+                        });
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+
+            // 4. Handle "Crop & Save" Button Click
+            $('#cropImageBtn').on('click', function() {
+                $uploadCrop.croppie('result', {
+                    type: 'base64',
+                    size: 'viewport'
+                }).then(function(resp) {
+                    // Show preview image and make it block to center it
+                    $('#preview-image').attr('src', resp).css('display', 'block');
+                    // Store data in hidden input
+                    $('#croppedImageData').val(resp);
+                    // Close Modal
+                    cropModal.hide();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
