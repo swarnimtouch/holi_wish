@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Your Personality Certificate</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Same Background Settings */
+        body {
+            background-image: url('blue_mobile.png');
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 0;
+            overflow-x: hidden;
+        }
+        @media (min-width: 1026px) {
+            body {
+                background-image: url('Blue_desktop.png');
+            }
+        }
+
+        /* Same Container Style for consistency */
+        .form-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+            border-top: 6px solid #A45597; /* Theme color */
+            text-align: center;
+            position: relative;
+        }
+
+        /* Certificate Title Style */
+        .main-title {
+            color: #A45597;
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Certificate Image Style */
+        .certificate-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            margin-bottom: 30px;
+        }
+
+        /* Premium Download Button */
+        .btn-download {
+            background: linear-gradient(45deg, #A45597, #169A9C);
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-download:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-box">
+    
+    <h1 class="main-title">Your Certificate is Ready!</h1>
+    
+    <img src="cerificate.png" alt="Holi Personality Certificate" class="certificate-img">
+    
+    <br>
+    
+    <a href="cerificate.png" download="My_Holi_Personality_Certificate.png" class="btn-download">
+        Download Certificate
+    </a>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

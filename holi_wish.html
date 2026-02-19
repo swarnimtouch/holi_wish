@@ -123,34 +123,75 @@
 
         /* colour buttons – same style, premium feel */
         .color-btn {
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            border: 3px solid #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            width: 80px; /* Thoda width bada rakha hai taki pot clear dikhe, aap apni image ke hisaab se adjust kar lena */
+            height: auto;
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 0 auto;
             display: block;
             position: relative;
             z-index: 15;
+            /* Border aur border-radius nikal diya hai */
         }
 
         .color-btn:hover {
             transform: scale(1.15) translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            /* Ab rgba(0,0,0,0.3) ki jagah var(--hover-color) use kiya hai */
+            filter: drop-shadow(0 8px 15px var(--hover-color)); 
         }
 
-        /* 9 premium colours */
-        .c-red { background-color: #FF2A2A; }
-        .c-blue { background-color: #0066FF; }
-        .c-green { background-color: #00CC44; }
-        .c-yellow { background-color: #FFD500; }
-        .c-orange { background-color: #FF7700; }
-        .c-purple { background-color: #9D00FF; }
-        .c-pink { background-color: #FF3399; }
-        .c-cyan { background-color: #00E5E5; }
-        .c-magenta { background-color: #FF00AA; }
+        /* ----- NAYA CODE START: Box ke aaju-baju color blast animation ----- */
+        .box-splash-active {
+            /* 1.5 seconds ka animation jo ekdum se nikal kar slow fade hota hai */
+            animation: outerColorBlast 1.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+        }
+
+        @keyframes outerColorBlast {
+            0% {
+                /* Start me colors box ke andar chhupe rahenge */
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2),
+                            0 0 0px 0px rgba(255, 51, 153, 0.8), /* Pink Top-Left */
+                            0 0 0px 0px rgba(0, 204, 68, 0.8),   /* Green Top-Right */
+                            0 0 0px 0px rgba(255, 213, 0, 0.8),  /* Yellow Bottom-Left */
+                            0 0 0px 0px rgba(0, 102, 255, 0.8);  /* Blue Bottom-Right */
+            }
+            40% {
+                /* Colors baahar ki taraf failenge (spread honge) */
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2),
+                            -40px -40px 50px 10px rgba(255, 51, 153, 0.6),
+                            40px -40px 50px 10px rgba(0, 204, 68, 0.6),
+                            -40px 40px 50px 10px rgba(255, 213, 0, 0.6),
+                            40px 40px 50px 10px rgba(0, 102, 255, 0.6);
+            }
+            100% {
+                /* End me colors aur door jaa kar gayab (fade out) ho jayenge */
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2),
+                            -80px -80px 80px 20px rgba(255, 51, 153, 0),
+                            80px -80px 80px 20px rgba(0, 204, 68, 0),
+                            -80px 80px 80px 20px rgba(255, 213, 0, 0),
+                            80px 80px 80px 20px rgba(0, 102, 255, 0);
+            }
+        }
+
+        .btn-personality {
+            background: linear-gradient(45deg, #A45597, #169A9C); /* Title wale colors ka gradient */
+            color: white;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-personality:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            color: #fff;
+        }
+
     </style>
 </head>
 <body>
@@ -162,22 +203,28 @@
     <!-- Particle arena: canvas behind text -->
     <div class="dynamic-text-container" id="particle-arena">
         <canvas id="color-canvas"></canvas>
-        <div id="dynamic-text" class="choosing-state">Pls choose a color</div>
+        <div id="dynamic-text" class="choosing-state">Kindly choose a color</div>
     </div>
     
     <!-- colour buttons grid (exactly as original) -->
     <div class="row text-center mt-3">
-        <div class="col-4 mb-4"><div class="color-btn c-red"></div></div>
-        <div class="col-4 mb-4"><div class="color-btn c-blue"></div></div>
-        <div class="col-4 mb-4"><div class="color-btn c-green"></div></div>
-        <div class="col-4 mb-4"><div class="color-btn c-yellow"></div></div>
-        <div class="col-4 mb-4"><div class="color-btn c-orange"></div></div>
-        <div class="col-4 mb-4"><div class="color-btn c-purple"></div></div>
-        <div class="col-4 mb-2"><div class="color-btn c-pink"></div></div>
-        <div class="col-4 mb-2"><div class="color-btn c-cyan"></div></div>
-        <div class="col-4 mb-2"><div class="color-btn c-magenta"></div></div>
+        <div class="col-4 mb-2"><img src="red.png" class="color-btn" data-color="#FF2A2A" style="--hover-color: #FF2A2A;" alt="Red"></div>
+        <div class="col-4 mb-2"><img src="blue.png" class="color-btn" data-color="#0066FF" style="--hover-color: #0066FF;" alt="Blue"></div>
+        <div class="col-4 mb-2"><img src="green.png" class="color-btn" data-color="#00CC44" style="--hover-color: #00CC44;" alt="Green"></div>
+        <div class="col-4 mb-2"><img src="yellow.png" class="color-btn" data-color="#FFD500" style="--hover-color: #FFD500;" alt="Yellow"></div>
+        <div class="col-4 mb-2"><img src="orange.png" class="color-btn" data-color="#FF7700" style="--hover-color: #FF7700;" alt="Orange"></div>
+        <div class="col-4 mb-2"><img src="purple.png" class="color-btn" data-color="#9D00FF" style="--hover-color: #9D00FF;" alt="Purple"></div>
+        <div class="col-4 mb-2"><img src="pink.png" class="color-btn" data-color="#FF3399" style="--hover-color: #FF3399;" alt="Pink"></div>
+        <div class="col-4 mb-2"><img src="white.png" class="color-btn" data-color="#FFFFFF" style="--hover-color: rgba(0, 0, 0, 0.5);" alt="White"></div>
+        <div class="col-4 mb-2"><img src="brown.png" class="color-btn" data-color="#8B4513" style="--hover-color: #8B4513;" alt="Brown"></div>
+    </div>
+
+    <div class="text-center mt-4 mb-2">
+        <a href="thankyou.html" id="personality-btn" class="btn-personality" style="display: none;">Show Personality Traits</a>
     </div>
 </div>
+
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -374,14 +421,28 @@ $(document).ready(function() {
     
     // ----- click handler for colour buttons (real holi magic) -----
     $('.color-btn').click(function() {
-        const selectedColor = $(this).css('background-color');
+        const selectedColor = $(this).data('color'); // Sirf yaha background-color ki jagah .data('color') aayega
         const $textElement = $('#dynamic-text');
         
+        const $formBox = $('.form-box');
+        $formBox.removeClass('box-splash-active'); // Purana animation hatao
+        void $formBox[0].offsetWidth;              // Code ko refresh (reflow) karo
+        $formBox.addClass('box-splash-active');    // Naya animation chalao
+
         // 1. Text animation – Happy Holi with pop (exactly like before)
         $textElement.removeClass('choosing-state holi-state');
         void $textElement[0].offsetWidth; // force reflow
         $textElement.text('Happy Holi!');
         $textElement.css('color', selectedColor);
+        
+        // ----- NAYA CODE START -----
+        // Agar selected color White hai, to black border lagao
+        if (selectedColor === '#FFFFFF' || selectedColor.toLowerCase() === '#ffffff') {
+            $textElement.css('-webkit-text-stroke', '2px black');
+        } else {
+            $textElement.css('-webkit-text-stroke', '0px transparent'); // Baki colors ke liye normal rakho
+        }
+
         $textElement.addClass('holi-state');
         
         // 2. Stop previous particles & canvas emissions
@@ -400,6 +461,11 @@ $(document).ready(function() {
         if (!animationFrame && particles.length > 0) {
             animate();
         }
+
+        clearTimeout(window.btnTimer); 
+        window.btnTimer = setTimeout(function() {
+            $('#personality-btn').fadeIn(500); // 500 milliseconds (aadha second) me smooth dikhega
+        }, 2000);
     });
     
     // Optional: initial state me bhi kuch na ho to canvas blank

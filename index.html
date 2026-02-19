@@ -79,7 +79,7 @@
             margin-bottom: 2px;
         }
 
-        .form-control:focus {
+        .form-control:focus, .form-select:focus {
             border-color: #A45597;
             box-shadow: 0 0 0 0.25rem rgba(164, 85, 151, 0.25);
         }
@@ -125,6 +125,40 @@
         }
         input.error {
             border-color: #A45597;
+        }
+
+        /* NAYA CODE: Custom File Upload Box (Screenshot jaisa) */
+        .upload-zone {
+            background-color: #f4fbfb; /* Aapki theme se match karta hua ekdam light teal background */
+            border: 2px dashed #169A9C; /* Teal color ki dashed border */
+            border-radius: 8px;
+            padding: 12px 10px; /* Height compact rakhne ke liye padding kam di hai */
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 5px;
+        }
+
+        .upload-zone:hover {
+            background-color: #e5f5f5;
+            border-color: #A45597; /* Hover karne par border aapke Purple/Pink color ki ho jayegi */
+        }
+
+        .upload-icon {
+            color: #169A9C; /* Cloud icon ka color */
+            margin-bottom: 3px;
+        }
+
+        .upload-text {
+            color: #169A9C;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 2px;
+        }
+
+        .upload-subtext {
+            color: #888; /* Halka grey color supports text ke liye */
+            font-size: 0.75rem;
         }
 
         /* Crop Button Specific Styling - Height match karne ke liye */
@@ -193,23 +227,40 @@
 
             <div class="section-title mt-2">Doctor Details</div>
             <div class="row">
-                <div class="col-md-6 mb-2">
-                    <label for="docName" class="form-label">Doctor Name</label>
-                    <input type="text" class="form-control form-control-sm" id="docName" name="docName" placeholder="Enter Doctor Name">
-                </div>
-                <div class="col-md-6 mb-2">
-                    <label for="docCity" class="form-label">City</label>
-                    <input type="text" class="form-control form-control-sm" id="docCity" name="docCity" placeholder="Enter Doctor City">
-                </div>
+            <div class="col-md-2 col-3 mb-2">
+                <label for="docPrefix" class="form-label">Prefix</label>
+                <select class="form-select form-select-sm" id="docPrefix" name="docPrefix" style="padding-left: 5px; padding-right: 20px;">
+                    <option value="Dr." selected>Dr.</option>
+                    <option value="Mr.">Mr.</option>
+                    <option value="Miss">Miss</option>
+                    <option value="Mrs">Mrs</option>
+                    <option value="Prof.">Prof.</option>
+                </select>
             </div>
+
+            <div class="col-md-6 col-9 mb-2">
+                <label for="docName" class="form-label">Doctor Name</label>
+                <input type="text" class="form-control form-control-sm" id="docName" name="docName" placeholder="Enter Doctor Name">
+            </div>
+
+            <div class="col-md-4 col-12 mb-2">
+                <label for="docCity" class="form-label">City</label>
+                <input type="text" class="form-control form-control-sm" id="docCity" name="docCity" placeholder="Enter Doctor City">
+            </div>
+        </div>
 
             <div class="row">
                 <div class="col-12 mb-2 text-center">
                     <label class="form-label d-block text-start">Doctor's Photo</label>
                     <input type="file" id="uploadInput" accept="image/*" style="display: none;">
-                    <button type="button" class="btn btn-secondary-custom w-100" id="uploadBtn">
-                        Choose Photo
-                    </button>
+
+                    <div class="upload-zone" id="uploadBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="upload-icon" viewBox="0 0 16 16">
+                            <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2zm2.354 5.146a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2z"/>
+                        </svg>
+                        <div class="upload-text">Tap to Upload Photo</div>
+                        <div class="upload-subtext">Supports: JPG, PNG</div>
+                    </div>
                     <img id="preview-image" src="" alt="Doctor Preview">
                     <input type="hidden" id="croppedImageData" name="croppedImageData">
                 </div>
